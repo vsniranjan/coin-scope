@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CoinCard from "./components/CoinCard";
 
-const API_URL =
-  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=10&page=1&sparkline=false";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export interface Coin {
   id: string;
@@ -23,7 +22,9 @@ const App = () => {
   useEffect(() => {
     const fetchCoins = async () => {
       try {
-        const res = await axios.get<Coin[]>(API_URL);
+        const res = await axios.get<Coin[]>(
+          `${API_URL}&order=market_cap_desc&per_page=10&page=1&sparkline=false`
+        );
         setCoins(res.data);
       } catch (err) {
         setError(err as Error);
