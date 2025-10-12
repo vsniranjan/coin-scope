@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import CoinCard from "./components/CoinCard";
 
 const API_URL =
   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=10&page=1&sparkline=false";
 
-interface Coin {
+export interface Coin {
   id: string;
   name: string;
   symbol: string;
@@ -24,8 +25,6 @@ const App = () => {
       try {
         const res = await axios.get<Coin[]>(API_URL);
         setCoins(res.data);
-        setLoading(false);
-        console.log(res.data);
       } catch (err) {
         setError(err as Error);
       } finally {
@@ -36,12 +35,18 @@ const App = () => {
     fetchCoins();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   return (
     <div>
       <h1>Coin Scope</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p>{error.message}</p>}
+      {!loading && !error && (
+        <main className='grid'>
+          {coins.map((coin) => (
+            <CoinCard key={coin.id} coin={coin} />
+          ))}
+        </main>
+      )}
     </div>
   );
 };
