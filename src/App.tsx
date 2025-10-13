@@ -5,6 +5,7 @@ import axios from "axios";
 
 import HomePage from "./pages/home";
 import AboutPage from "./pages/about";
+import NoteFoundPage from "./pages/not-found";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -65,6 +66,7 @@ const App = () => {
           }
         />
         <Route path='/about' element={<AboutPage />} />
+        <Route path='*' element={<NoteFoundPage />} />
       </Routes>
     </>
   );
