@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import CoinCard from "./components/CoinCard";
+import FilterInput from "./components/FilterInput";
 import LimitSelector from "./components/LimitSelector";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -21,7 +22,9 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
   const [limit, setLimit] = useState<number>(10);
+  const [filter, setFilter] = useState("");
 
+  // Initial Rendering of coins and updation in changing limit
   useEffect(() => {
     const fetchCoins = async () => {
       try {
@@ -39,19 +42,32 @@ const App = () => {
     fetchCoins();
   }, [limit]);
 
+  // Showing Filtered coins
+  const filteredCoins = coins.filter((coin) => {
+    return (
+      coin.name.toLocaleLowerCase().includes(filter.toLowerCase()) ||
+      coin.symbol.toLocaleLowerCase().includes(filter.toLowerCase())
+    );
+  });
+
   return (
     <div>
       <h1>Coin Scope</h1>
       {loading && <p>Loading...</p>}
       {error && <p>{error.message}</p>}
 
-      <LimitSelector limit={limit} onLimitChange={setLimit} />
+      <div className='top-controls'>
+        <FilterInput filter={filter} onFilterChange={setFilter} />
+        <LimitSelector limit={limit} onLimitChange={setLimit} />
+      </div>
 
       {!loading && !error && (
         <main className='grid'>
-          {coins.map((coin) => (
-            <CoinCard key={coin.id} coin={coin} />
-          ))}
+          {filteredCoins.length > 0 ? (
+            filteredCoins.map((coin) => <CoinCard key={coin.id} coin={coin} />)
+          ) : (
+            <p>No matching coins</p>
+          )}
         </main>
       )}
     </div>
