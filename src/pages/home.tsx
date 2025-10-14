@@ -56,7 +56,6 @@ const HomePage = ({
     });
   return (
     <div>
-      <h1>Coin Scope</h1>
       {loading && <p>Loading...</p>}
       {error && <p>{error.message}</p>}
 
