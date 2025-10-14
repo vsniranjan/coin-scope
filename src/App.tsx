@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router";
 import Header from "./components/Header";
 import axios from "axios";
@@ -10,6 +10,7 @@ import CoinDetailsPage from "./pages/coin-details";
 
 const API_URL: string = import.meta.env.VITE_API_URL;
 
+// For /coins/markets endpoint (list view)
 export interface Coin {
   id: string;
   name: string;
@@ -18,6 +19,73 @@ export interface Coin {
   current_price: number;
   market_cap: number;
   price_change_percentage_24h: number;
+}
+
+// For /coins/{id} endpoint (details view)
+export interface CoinDetails {
+  id: string;
+  name: string;
+  symbol: string;
+  market_cap_rank: number;
+  last_updated: string;
+  categories: string[];
+
+  description: {
+    en: string;
+  };
+
+  links: {
+    homepage: string[];
+    blockchain_site: string[];
+  };
+
+  image: {
+    thumb: string;
+    small: string;
+    large: string;
+  };
+
+  market_data: {
+    total_supply: number;
+    circulating_supply: number;
+    price_change_percentage_24h: number;
+
+    current_price: {
+      inr: number;
+    };
+
+    market_cap: {
+      inr: number;
+    };
+
+    price_change_24h_in_currency: {
+      inr: number;
+    };
+
+    high_24h: {
+      inr: number;
+    };
+
+    low_24h: {
+      inr: number;
+    };
+
+    ath: {
+      inr: number;
+    };
+
+    ath_date: {
+      inr: string;
+    };
+
+    atl: {
+      inr: number;
+    };
+
+    atl_date: {
+      inr: string;
+    };
+  };
 }
 
 const App = () => {
@@ -44,7 +112,7 @@ const App = () => {
     };
 
     fetchCoins();
-  }, [limit, sortBy]);
+  }, [limit]);
 
   return (
     <>
