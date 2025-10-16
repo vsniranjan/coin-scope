@@ -1,3 +1,4 @@
+import Spinner from "../components/Sinner";
 import CoinCard from "../components/CoinCard";
 import FilterInput from "../components/FilterInput";
 import SortSelector from "../components/SortSelector";
@@ -56,7 +57,7 @@ const HomePage = ({
     });
   return (
     <div>
-      {loading && <p>Loading...</p>}
+      {loading && <Spinner color='white' />}
       {error && <p>{error.message}</p>}
 
       <div className='top-controls'>

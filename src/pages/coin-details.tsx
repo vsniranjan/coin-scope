@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import axios from "axios";
+import Spinner from "../components/Sinner";
 
 import type { CoinDetails } from "../App";
 
@@ -33,7 +34,7 @@ const CoinDetailsPage = () => {
       <h1 className='coin-details-title'>
         {coin ? `${coin.name} (${coin.symbol.toUpperCase()})` : "Coin Details"}
       </h1>
-      {loading && <p>Loading...</p>}
+      {loading && <Spinner />}
       {error && <div className='error'>{error.message}</div>}
       {!loading && !error && (
         <>
