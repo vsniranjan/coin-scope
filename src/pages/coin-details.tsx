@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import axios from "axios";
 import Spinner from "../components/Sinner";
+import CoinChart from "../components/CoinChart";
 
 import type { CoinDetails } from "../App";
 
@@ -95,6 +96,9 @@ const CoinDetailsPage = () => {
                 : "N/A"}
             </h4>
           </div>
+
+          <CoinChart coinId={coin?.id} />
+
           <div className='coin-details-links'>
             {coin?.links.homepage[0] && (
               <p>

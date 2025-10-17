@@ -5,7 +5,7 @@ const override = {
   margin: "0 auto 50px auto",
 };
 
-const Spinner = ({ color = "blue", size = "150" }) => {
+const Spinner = ({ color = "blue", size = "150px" }) => {
   return (
     <div>
       <BarLoader
