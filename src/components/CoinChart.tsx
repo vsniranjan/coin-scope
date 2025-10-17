@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
   TimeScale,
+  Filler,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 
@@ -21,7 +22,8 @@ ChartJS.register(
   LineElement,
   TimeScale,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 interface CoinChartProps {
@@ -75,7 +77,39 @@ const CoinChart = ({ coinId }: CoinChartProps) => {
 
     fetchPrices();
   }, [coinId]);
-  return <>Chart</>;
+
+  if (loading || !chartData) return <p>Loading chart...</p>;
+  return (
+    <div style={{ marginTop: "30px" }}>
+      <Line
+        data={chartData!}
+        options={{
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: { mode: "index", intersect: false },
+          },
+          scales: {
+            x: {
+              type: "time",
+              time: {
+                unit: "day",
+              },
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 7,
+              },
+            },
+            y: {
+              ticks: {
+                callback: (value) => `₹${value.toLocaleString()}`,
+              },
+            },
+          },
+        }}
+      />
+    </div>
+  );
 };
 
 export default CoinChart;
