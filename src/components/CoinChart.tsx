@@ -1,4 +1,3 @@
-const API_URL: string = import.meta.env.VITE_COIN_API_URL;
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Line } from "react-chartjs-2";
@@ -14,6 +13,8 @@ import {
   Filler,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
+
+const API_URL: string = import.meta.env.VITE_COIN_API_URL;
 
 ChartJS.register(
   CategoryScale,
@@ -80,7 +81,7 @@ const CoinChart = ({ coinId }: CoinChartProps) => {
 
   if (loading || !chartData) return <p>Loading chart...</p>;
   return (
-    <div style={{ marginTop: "30px" }}>
+    <div className='chart-container'>
       <Line
         data={chartData!}
         options={{
